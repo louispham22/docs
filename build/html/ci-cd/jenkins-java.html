@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Build a Java app with Maven &mdash; Tutorial DevOps 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Automation" href="../automation.html" />
+    <link rel="prev" title="Jenkins User Documentation" href="jenkins.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Tutorial DevOps
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about-me.html">All about me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud.html">Cloud</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ci-cd.html">CI-CD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="jenkins.html">Jenkins User Documentation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Build a Java app with Maven</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-jenkins-in-docker">Run Jenkins in Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#on-macos-and-linux">On macOS and Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup-wizard">Setup wizard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../automation.html">Automation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring.html">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web-servers.html">Web-Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cluster-managers.html">Cluster-Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash-shell.html">Bash-Shell</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Tutorial DevOps</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../ci-cd.html">CI-CD</a> &raquo;</li>
+        
+      <li>Build a Java app with Maven</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/ci-cd/jenkins-java.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="build-a-java-app-with-maven">
+<h1>Build a Java app with Maven<a class="headerlink" href="#build-a-java-app-with-maven" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial shows you how to use Jenkins to orchestrate building a simple Java application with Maven.</p>
+<p>If you are a Java developer who uses Maven and who is new to CI/CD concepts, or you might be familiar whit these concepts but don’t know how to implement building your application using Jenkins, then this tutorial is for you.</p>
+<p>The simple Java application (which you’ll obtain from a sample repository on GitHub) outputs the string “Hello world!” and is accompanied by a couple of unit tests to check that the main application works as expected. The results of these tests are saved to a JUnit XML report.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>For this tutorial, you will require:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt>A macOS, Linux or Windows machine with:</dt>
+<dd><ul class="first last">
+<li>256 MB of RAM, although more than 512 is recommended.</li>
+<li>10 GB of drive space for Jenkins and your Docker images and containers.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>The following software installed::</dt>
+<dd><ul class="first last">
+<li>Docker - Read more about installing Docker in the Installing Docker section of the Installing Jenkins page.</li>
+<li>Note: If you use Linux, this tutorial assumes that you are not running Docker commands as the root user, but instead with a single user account that also has access to the other tools used throughout this tutorial.</li>
+<li>Git and optionally GitHub Desktop.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="run-jenkins-in-docker">
+<h2>Run Jenkins in Docker<a class="headerlink" href="#run-jenkins-in-docker" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial, you’ll be running Jenkins as a Docker container from the jenkinsci/blueocean Docker image</p>
+<p>To run Jenkins in Docker, follow the relevant instructions below for either macOS and Linux or Windows.</p>
+<p>You can read more about Docker container and image concepts in the Docker and Downloading and running Jenkins in Docker sections of the Installing Jenkins page.</p>
+</div>
+<div class="section" id="on-macos-and-linux">
+<h2>On macOS and Linux<a class="headerlink" href="#on-macos-and-linux" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Open up a terminal window.</li>
+<li>Run the jenkinsci/blueocean image as a container in Docker using the following docker run command (bearing in mind that this command automatically downloads the image if this hasn’t been done):</li>
+</ol>
+<blockquote>
+<div><code class="xref py py-class docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--rm</span> <span class="pre">-u</span> <span class="pre">root</span> <span class="pre">-p</span> <span class="pre">8080:8080</span> <span class="pre">-v</span> <span class="pre">jenkins-data:/var/jenkins_home</span> <span class="pre">-v</span> <span class="pre">/var/run/docker.sock:/var/run/docker.sock</span> <span class="pre">-v</span> <span class="pre">&quot;$HOME&quot;:/home</span> <span class="pre">jenkinsci/blueocean</span></code></div></blockquote>
+<p>Maps the /var/jenkins_home directory in the container to the Docker volume with the name jenkins-data. If this volume does not exist, then this docker run command will automatically create the volume for you.
+Maps the $HOME directory on the host (i.e. your local) machine (usually the /Users/&lt;your-username&gt; directory) to the /home directory in the container.</p>
+</div>
+<div class="section" id="setup-wizard">
+<h2>Setup wizard<a class="headerlink" href="#setup-wizard" title="Permalink to this headline">¶</a></h2>
+<p>Before you can access Jenkins, there are a few quick “one-off” steps you’ll need to perform.</p>
+<p>Unlocking Jenkins
+When you first access a new Jenkins instance, you are asked to unlock it using an automatically-generated password.</p>
+<ol class="arabic simple">
+<li>After the 2 sets of asterisks appear in the terminal/command prompt window, browse to <a class="reference external" href="http://localhost:8080">http://localhost:8080</a> and wait until the Unlock Jenkins page appears.</li>
+</ol>
+<p><a class="reference external" href="https://jenkins.io/doc/book/resources/tutorials/setup-jenkins-01-unlock-jenkins-page.jpg">https://jenkins.io/doc/book/resources/tutorials/setup-jenkins-01-unlock-jenkins-page.jpg</a></p>
+<ol class="arabic simple" start="2">
+<li>From your terminal/command prompt window again, copy the automatically-generated alphanumeric password (between the 2 sets of asterisks).</li>
+</ol>
+<p><a class="reference external" href="https://jenkins.io/doc/book/resources/tutorials/setup-jenkins-02-copying-initial-admin-password.png">https://jenkins.io/doc/book/resources/tutorials/setup-jenkins-02-copying-initial-admin-password.png</a></p>
+<p>Copying initial admin password</p>
+<p>On the Unlock Jenkins page, paste this password into the Administrator password field and click Continue.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../automation.html" class="btn btn-neutral float-right" title="Automation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="jenkins.html" class="btn btn-neutral" title="Jenkins User Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Tung Pham
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
